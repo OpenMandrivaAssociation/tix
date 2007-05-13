@@ -1,18 +1,20 @@
 # pretty borked...
 %define major 8.1
-%define tcl_major 8.4
+%define tcl_major 8.5
+%define tk_major  8.5
 %define libname	%mklibname tix %{major}.%{tcl_major}
 
 Summary:	A set of capable widgets for Tk
 Name:		tix
 Version:	8.1.4
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	BSD
 Group:		System/Libraries
 URL:		http://tix.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/tixlibrary/tix-%{version}.tar.bz2
 Patch10:	tix-8.1.4-install-pkgIndex-datadir-83662.patch
 Patch11:	tix-8.1.4-pkgIndex-datadir-83662.patch
+Patch1:     tix-8.1.4-tcl85.patch 
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	groff
@@ -63,7 +65,9 @@ This package contains development files for %{name}.
 %setup -q
 %patch10 -p0
 %patch11 -p0
-
+%patch1 -p0
+# patch makefile to BINDIRS
+perl -pi -e 's/(BINDIRS\s*= )/$1 tk8.5 /g' unix/Makefile.in
 # clean up CVS stuff
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
     if [ -e "$i" ]; then rm -r $i; fi >&/dev/null
@@ -99,8 +103,9 @@ pushd unix
         --with-tkconfig=%{_libdir} \
         --with-tclinclude=$TCL_SRC_DIR \
         --with-tkinclude=$TK_SRC_DIR
-
-    pushd tk8.4
+    cp -r tk8.4 tk%tk_major
+    pushd tk%tk_major
+    perl -pi -e 's/8.4/%tk_major/' Makefile
 	%configure \
     	    --enable-gcc \
             --enable-shared \
@@ -144,7 +149,7 @@ rm -rf %{buildroot}%{_libdir}/libtixsam*.so*
 
 # fix the shared libname
 rm -f %{buildroot}%{_libdir}/libtix*.so
-install -m0755 unix/tk8.4/libtix%{major}.%{tcl_major}.so %{buildroot}%{_libdir}/libtix%{major}.%{tcl_major}.so.0
+install -m0755 unix/tk%tk_major/libtix%{major}.%{tcl_major}.so %{buildroot}%{_libdir}/libtix%{major}.%{tcl_major}.so.0
 ln -snf libtix%{major}.%{tcl_major}.so.0 %{buildroot}%{_libdir}/libtix%{major}.%{tcl_major}.so
 
 pushd %{buildroot}%{_bindir}
@@ -158,7 +163,7 @@ mv %{buildroot}/usr/share/man/mann/tixwish.1 %{buildroot}/usr/share/man/man1
 chmod 755 %{buildroot}%{_libdir}/*.so*
 
 # fix the tixConfig.sh file
-perl -pi -e "s|`pwd`/unix/tk8.4|%{_libdir}|g" %{buildroot}%{_libdir}/tixConfig.sh
+perl -pi -e "s|`pwd`/unix/tk%tk_major|%{_libdir}|g" %{buildroot}%{_libdir}/tixConfig.sh
 
 %post -n %{libname} -p /sbin/ldconfig
 
