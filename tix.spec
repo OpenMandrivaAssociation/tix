@@ -19,6 +19,7 @@ BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	groff
 BuildRequires:	tcl
+BuildRequires:	libxscrnsaver-devel
 Epoch:		1
 Buildroot:	%{_tmppath}/%{name}-%{version}-buildroot
 
