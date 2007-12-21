@@ -21,6 +21,7 @@ BuildRequires:	groff
 BuildRequires:	tcl
 BuildRequires:	libxscrnsaver-devel
 Epoch:		1
+Buildroot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Tix (Tk Interface Extension), an add-on for the Tk widget set, is an
