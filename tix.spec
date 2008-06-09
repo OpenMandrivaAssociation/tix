@@ -166,9 +166,13 @@ chmod 755 %{buildroot}%{_libdir}/*.so*
 # fix the tixConfig.sh file
 perl -pi -e "s|`pwd`/unix/tk%tk_major|%{_libdir}|g" %{buildroot}%{_libdir}/tixConfig.sh
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 rm -rf %{buildroot}
