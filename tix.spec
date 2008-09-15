@@ -7,7 +7,7 @@
 Summary:	A set of capable widgets for Tk
 Name:		tix
 Version:	8.1.4
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	BSD
 Group:		System/Libraries
 URL:		http://tix.sourceforge.net/
