@@ -1,21 +1,20 @@
 Summary:	A set of capable widgets for Tk
 Name:		tix
 Version:	8.4.3
-Release:	%mkrel 5
+Release:	6
+Epoch:		1
 License:	BSD
 Group:		System/Libraries
 URL:		http://tix.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/tixlibrary/Tix%{version}-src.tar.gz
-Patch1:		tix-8.4.2-link.patch 
+Source1:	%{name}.rpmlintrc
+Patch1:		tix-8.4.2-link.patch
 Patch2:		tix-8.4.3-tcl86.patch
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	groff
 BuildRequires:	tcl
-BuildRequires:	libxscrnsaver-devel
-Obsoletes:	%{mklibname tix 8.1.8.5} < 1:8.1.4-9mdv
-Epoch:		1
-Buildroot:	%{_tmppath}/%{name}-%{version}-buildroot
+BuildRequires:	pkgconfig(xscrnsaver)
 
 %description
 Tix (Tk Interface Extension), an add-on for the Tk widget set, is an
@@ -28,17 +27,14 @@ directory tree and a file manager.
 Install the tix package if you want to try out more complicated widgets
 for Tk.  You'll also need to have the tcl and tk packages installed.
 
-%package	devel 
+%package	devel
 Summary:	Development files for %{name}
 Group:		Development/Other
-Obsoletes:	%{mklibname tix 8.1.8.5 -d} < 1:8.1.4-9mdv
-Epoch:		1
 
 %description	devel
 This package contains development files for %{name}.
 
 %prep
-
 %setup -q -n Tix%{version}
 %patch1 -p1 -b .link
 %patch2 -p1 -b .tcl86
@@ -84,26 +80,91 @@ install -m0644 man/*.1 %{buildroot}%{_mandir}/man1
 rm -f %{buildroot}%{tcl_sitearch}/Tix%{version}/README.txt
 rm -f %{buildroot}%{tcl_sitearch}/Tix%{version}/license.terms
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc *.txt *.html license.terms docs/*
 %{_libdir}/libTix.so
 %{tcl_sitearch}/Tix%{version}
 %{_mandir}/man1/*
 
 %files devel
-%defattr(-,root,root,-)
 %{_includedir}/%{name}
 %{_mandir}/mann/*
+
+
+
+%changelog
+* Fri May 06 2011 Oden Eriksson <oeriksson@mandriva.com> 1:8.4.3-5mdv2011.0
++ Revision: 670708
+- mass rebuild
+
+* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 1:8.4.3-4mdv2011.0
++ Revision: 608005
+- rebuild
+
+* Mon Mar 15 2010 Oden Eriksson <oeriksson@mandriva.com> 1:8.4.3-3mdv2010.1
++ Revision: 520286
+- rebuilt for 2010.1
+
+* Thu Sep 03 2009 Christophe Fergeau <cfergeau@mandriva.com> 1:8.4.3-2mdv2010.0
++ Revision: 427379
+- rebuild
+
+* Sat Dec 06 2008 Adam Williamson <awilliamson@mandriva.org> 1:8.4.3-1mdv2009.1
++ Revision: 311053
+- rebuild for new tcl
+- install to new location as per policy, but also to /usr/lib as tix binary
+  is linked against the lib
+- drop a bunch of old silly workarounds
+- drop old patches (no longer needed)
+- add tcl86.patch (fix build for tcl 8.6)
+- add link.patch (from Fedora, I think)
+- new release 8.4.3
+- drop all the ridiculous libification crap
+
+* Mon Sep 15 2008 Per Øyvind Karlsen <peroyvind@mandriva.org> 1:8.1.4-9mdv2009.0
++ Revision: 284835
+- rebuild to fix 'rpmlib(PayloadIsLzma) <= 4.4.2.2-1' dependency
+
+* Wed Jun 18 2008 Thierry Vignaud <tv@mandriva.org> 1:8.1.4-8mdv2009.0
++ Revision: 225753
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed Mar 05 2008 Oden Eriksson <oeriksson@mandriva.com> 1:8.1.4-7mdv2008.1
++ Revision: 179652
+- rebuild
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Fri Sep 07 2007 Anssi Hannula <anssi@mandriva.org> 1:8.1.4-6mdv2008.0
++ Revision: 82018
+- rebuild for new soname of tcl
+
+* Tue May 15 2007 Michael Scherer <misc@mandriva.org> 1:8.1.4-5mdv2008.0
++ Revision: 26805
+- Fix BuildRequires
+- rebuild on new tcl 8.5
+
+
+* Fri Feb 02 2007 Oden Eriksson <oeriksson@mandriva.com> 8.1.4-4mdv2007.0
++ Revision: 115965
+- Import tix
+
+* Thu Jan 19 2006 Christiaan Welvaart <cjw@daneel.dyndns.org> 1:8.1.4-4mdk
+- add BuildRequires: tcl (for tclsh)
+
+* Tue Jan 03 2006 Oden Eriksson <oeriksson@mandriva.com> 1:8.1.4-3mdk
+- fix deps
+
+* Tue Jan 03 2006 Oden Eriksson <oeriksson@mandriva.com> 1:8.1.4-2mdk
+- added epoch
+
+* Sun Jan 01 2006 Oden Eriksson <oeriksson@mandriva.com> 8.1.4-1mdk
+- initial Mandriva package
 
