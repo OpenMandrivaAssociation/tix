@@ -1,7 +1,7 @@
 Summary:	A set of capable widgets for Tk
 Name:		tix
 Version:	8.4.3
-Release:	8
+Release:	9
 Epoch:		1
 License:	BSD
 Group:		System/Libraries
