@@ -10,7 +10,7 @@
 #BUILDSTDERR: make: *** [Makefile:272: libTix.so] Error 254
 
 %ifarch armv7hnl
-%global optflags %{optflags} -fusle-ld=gold
+%global optflags %{optflags} -fuse-ld=gold
 %endif
 
 Summary:	A set of capable widgets for Tk
