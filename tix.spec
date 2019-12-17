@@ -1,5 +1,16 @@
+#BUILDSTDERR: 1.	Running pass 'Function Pass Manager' on module 'ld-temp.o'.
+#BUILDSTDERR: 2.	Running pass 'ARM Instruction Selection' on function '@Tk_InitStubs'
+#BUILDSTDERR: #0 0xf73e9454 (/usr/lib/libLLVMSupport.so.9.0+0x1d9454)
+#BUILDSTDERR: #1 0xf73e666c llvm::sys::RunSignalHandlers() (/usr/lib/libLLVMSupport.so.9.0+0x1d666c)
+#BUILDSTDERR: #2 0xf73e96dc (/usr/lib/libLLVMSupport.so.9.0+0x1d96dc)
+#BUILDSTDERR: #3 0xf6f93c00 __default_sa_restorer (/lib/libc.so.6+0x32c00)
+#BUILDSTDERR: #4 0xf6f7be66 __libc_do_syscall (/lib/libc.so.6+0x1ae66)
+#BUILDSTDERR: clang-9: error: unable to execute command: Aborted (core dumped)
+#BUILDSTDERR: clang-9: error: linker command failed due to signal (use -v to see invocation)
+#BUILDSTDERR: make: *** [Makefile:272: libTix.so] Error 254
+
 %ifarch armv7hnl
-%define _disable_lto 1
+%global optflags %{optflags} -fusle-ld=gold
 %endif
 
 Summary:	A set of capable widgets for Tk
