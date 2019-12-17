@@ -1,3 +1,7 @@
+%ifarch armv7hnl
+%define _disable_lto 1
+%endif
+
 Summary:	A set of capable widgets for Tk
 Name:		tix
 Version:	8.4.3
