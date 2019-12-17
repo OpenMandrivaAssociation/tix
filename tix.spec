@@ -1,3 +1,4 @@
+# (tpg) 2019-12-17
 #BUILDSTDERR: 1.	Running pass 'Function Pass Manager' on module 'ld-temp.o'.
 #BUILDSTDERR: 2.	Running pass 'ARM Instruction Selection' on function '@Tk_InitStubs'
 #BUILDSTDERR: #0 0xf73e9454 (/usr/lib/libLLVMSupport.so.9.0+0x1d9454)
@@ -10,7 +11,7 @@
 #BUILDSTDERR: make: *** [Makefile:272: libTix.so] Error 254
 
 %ifarch armv7hnl
-%global optflags %{optflags} -fuse-ld=gold
+%global optflags %{optflags} -fuse-ld=bfd
 %endif
 
 Summary:	A set of capable widgets for Tk
