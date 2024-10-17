@@ -5,7 +5,7 @@ Release:	18
 Epoch:		1
 License:	BSD
 Group:		System/Libraries
-URL:		http://tix.sourceforge.net/
+URL:		https://tix.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/tixlibrary/Tix%{version}-src.tar.gz
 Source1:	%{name}.rpmlintrc
 Patch1:		https://src.fedoraproject.org/rpms/tix/raw/master/f/tix-8.4.2-link.patch
