@@ -11,6 +11,11 @@ Source1:	%{name}.rpmlintrc
 Patch1:		https://src.fedoraproject.org/rpms/tix/raw/master/f/tix-8.4.2-link.patch
 Patch2:		https://src.fedoraproject.org/rpms/tix/raw/master/f/tix-8.4.3-tcl86.patch
 Patch3:		https://src.fedoraproject.org/rpms/tix/raw/master/f/tix-8.4.3-covscan-fixes.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(tcl)
 BuildRequires:	pkgconfig(tk)
 BuildRequires:	groff
